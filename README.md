@@ -215,3 +215,12 @@ PRs welcome. Focus areas:
 ## License
 
 MIT â€” use it, fork it, share it.
+
+---
+
+## Cross-Org Sync
+
+Mirrored to `Nutanix-GCO/poc-claude-code-costguard`. `jj-nutanix/claude-code-costguard` is the SemVer source of truth;
+the GCO mirror is updated via PR each cycle. **Last synced: 2026-04-30** — see
+`JJ-GCO-SYNC-CHECKPOINT-2026-04-30.md` in the cursor-env workspace for the
+cycle's audit.
