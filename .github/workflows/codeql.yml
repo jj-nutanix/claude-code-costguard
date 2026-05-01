@@ -33,6 +33,7 @@ jobs:
       fail-fast: false
       matrix:
         language: ['actions']
+    if: ${{ github.event.repository.visibility == 'public' }}
     continue-on-error: true
     steps:
       - name: Checkout
