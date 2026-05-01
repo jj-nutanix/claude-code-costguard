@@ -1,0 +1,48 @@
+name: CodeQL (warn-only baseline)
+
+# Warn-only CodeQL baseline scan. Per MULTI-ORG-CONTRACT.md, jj-nutanix
+# runs the same scans as Nutanix-GCO. continue-on-error: true so
+# findings surface without blocking PRs. Baseline amnesty applies to
+# alerts present at the first run; new alerts after that are triaged.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions: read-all
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['actions']
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+      - name: Analyze
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:${{ matrix.language }}
